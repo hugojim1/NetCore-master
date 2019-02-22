@@ -1,0 +1,276 @@
+﻿@page
+@model WebMicrosoftp2.Pages.InformacionModel
+@{
+    ViewData["Title"] = "Informacion";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+
+<ul class="nav nav-pills nav-justified table-bordered" id="navPill">
+    <li class="nav-item active">
+        <a class="nav-link active" data-toggle="pill" href="#yaml">Yaml</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="pill" href="#AzureDocker">Kubernetes y Dockers</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="pill" href="#linux">Linux</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " data-toggle="pill" href="#instalacion">Instalación</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane container active" id="yaml">
+
+        <h1> Esqueletos de objetos en Kubernetes Formato Yaml </h1>
+        <br />
+        <div>  <h1>Esqueleto Yaml</h1> </div>
+
+        <pre>   apiVersion: v1       # required field
+            kind: Object         # required field
+            metadata:            # required field  
+                    name: ejemplo     # required field  
+                    namespace: default  
+                    labels:    
+                    app: presentacion  ...
+            spec:                # required field  
+                containers:  
+                - image: myImage:latest
+            …
+            status:  
+              hostIP: X.X.X.X  
+              phase: Running  
+            ...
+
+    </pre>
+
+        <div> <h1> Pod </h1></div>
+        <pre>         
+            apiVersion: v1
+            kind: Pod
+            metadata:  
+               name: ejemplo
+            spec:  
+              containers:
+              - image: nombreimagen
+              name: ejemplo
+
+    </pre>
+        <div> <h1> Replicaset </h1> </div>
+        <pre>         
+            apiVersion: extensions/v1beta1
+            kind: ReplicaSet
+            metadata:  
+              name: nginx  
+              namespace: default
+            spec:  
+              replicas: 2  
+              selector:    
+               matchLabels:      
+                app: nginx  
+            template:   
+              metadata:      
+               labels:        
+                app: nginx    
+            spec:      
+              containers:      
+              - image: bitnami/nginx
+                name: nginx
+    </pre>
+
+        <div><h1>Deployment </h1></div>
+        <pre>         
+            apiVersion: extensions/v1beta1
+            kind: Deployment
+            metadata:  
+              name: nginx  
+               namespace: default
+            spec:
+              revisionHistoryLimit: 2
+              strategy:
+                type: RollingUpdate
+              replicas: 2  
+            template:   
+              metadata:     
+               labels:      
+                app: nginx    
+            spec:     
+              containers:      
+               - image: bitnami/nginx
+                 name: nginx
+                 ports:
+                  - name: http
+                  containerPort: 8080
+    </pre>
+        <div><h1>Services</h1></div>
+
+        <pre>         
+            apiVersion: v1
+            kind: Service
+            metadata:
+              name: nginx
+              namespace: default
+            spec:
+              type: ClusterIP
+              ports:
+              - name: http
+                port: 80
+                targetPort: http
+              selector:
+                app: nginx
+    </pre>
+        <div> <h1> Ingress </h1> </div>
+        <pre>         
+            apiVersion: extensions/v1beta1
+            kind: Ingress
+            metadata:
+              name: nginx
+              annotations:
+                nginx.ingress.kubernetes.io/affinity: cookie
+            spec:
+              rules:
+              - host: foo.bar.com    http:      paths: - path: /  backend:  serviceName: nginx   servicePort: 80
+         </pre>
+    </div>
+
+    <div class="tab-pane container fade" id="AzureDocker">
+        <div class="titleKubernet"> <h1> Kubernetes y Docker en Azure </h1> </div>
+        <pre>         
+            $	az login  Hacer login en nuestra pagina de azure.
+
+            $	docker login Hacer login en docker hub, para poder descargar imágenes.
+
+            $	docker search <nombre-imagen> Buscar imágenes.
+
+            $	docker pull <nombre-imagen>  Descargar imagen.
+
+            $	docker images Ver mis imágenes.
+
+            $	docker run -it --rm -p 8080:80 <nombre imagen> Este comando sirve para ver nuestra imagen en esa direccion.
+
+            $	az acr login --name <nombre-container-registry> Hace login en azure container registry.
+
+            $	docker tag <nombre-imagen> <nombre-recurso / nombre:etiqueta>  Se le añade una etiqueta a una imagen para hacernos la vida mas fácil.
+
+            $	docker push <tag>
+
+            $	az acr repository list --name <acrnombre> --output table Para ver nuestra lista de imágenes de acr
+
+            $	az acr show --name <acrName> --query loginServer Obtener nombre del servidor donde se inicio sesion.
+
+            $	az acr credential show --name <acrName> --query "passwords[0].value" Obtener contraseña de registro de contenedor.
+
+            $	az container create --resource-group myResourceGroup --name aci-tutorial-app --image 
+                <acrLoginServer>/aci-tutorial-app:v1 --cpu 1 --memory 1 --registry-login-server <acrLoginServer> --registry-username <acrName> 
+                --registry-password <acrPassword> --dns-name-label <aciDnsLabel> --ports 80 Comando para crear un container.
+
+            $	az container show --resource-group myResourceGroup --name aci-tutorial-app 
+                --query instanceView.state Comprobar el progreso de la implementación.
+
+         </pre>
+    </div>
+    <div class="tab-pane container fade" id="linux">
+        <div class="titleKubernet"> <h1> Comandos varios </h1> </div>
+        <div> <h1> Linux </h1> </div>
+        <pre>         
+        ➢	sudo: es un permiso de súper usuario que se da para ejecutar X tarea.
+        ➢	sudo -i: se ingresa como súper usuario(para no estar poniendo “sudo”, entre otras cosas más).
+        ➢	upgrade:Es un gran cambio en la versión de linux(por aquello la versión sea un poco vieja y unas apps no tengan ciertas dependencias).
+        ➢	Install: Para instalar un paquete.
+        ➢	apt-get:Instala/informa sobre los paquetes, resolviendo las dependencias, los paquetes que instala los consigue por internet.
+        ➢	update: Son actualizaciones de software(parches).
+        ➢	exit: es el comando que se utiliza para salir.
+        ➢	clear: nos sirve para estar limpiando el CMD.
+        ➢	cd: nos sirve para buscar archivos en nuestro ordenador.
+        ➢	ls:encuentra los archivos que hay en la carpeta.
+        ➢	ls -la: buscar sobre este comando
+        ➢	ls/: verificar, muestra archivos también
+        ➢	swapoff -a: desactivar swap.
+        ➢	ip a: verificar la direcciones ip.
+        ➢	Systemctl unmask nombre.service: sirve para desenmascarar un archivo.
+        ➢	Creadores y editores de archivos:
+                ➢	nano nombrearchivo
+                ➢	gedit nombrearchivo(más recomendado, los otros requieren más investigación para el uso)
+                ➢	vi nombrearchivo
+        ➢	Create vr apply: el create crea el objeto pero no deja modificarle nada despues de creado,
+                mientras que un apply hace un objeto al cual se le pueden seguir haciendo apply.
+        
+          </pre>
+        <div> <h1> Kubernetes </h1> </div>
+        <pre>         
+        Es un proyecto de software libre, el cual orquesta contenedores, los creadores son:
+            •	Joe Beda
+            •	Brendan Burns
+            •	Craig McLuckie
+
+            Si en algún momento de este documento tiene alguna duda, puede consultar 
+            la pagina oficial de  <a href=" https://kubernetes.io/" target="_blank">Kubernetes </a> 
+          </pre>
+        <div> <h1> Ventajas </h1> </div>
+        <pre>         
+        •	Se pueden orquestar contenedores en varios host.
+
+        •	Existe la posibilidad de usar los recursos de hardware.
+
+        •	Se  puede controlar y automatizar nuestras implementaciones y actualizaciones de 
+                    las aplicaciones que tenemos implementadas.
+
+        •	Se puede añadir almacenamiento para ejecutar aplicaciones con estado.
+
+        •	Escalar aplicaciones de contenedores o los recursos que están consumiendo dichas 
+                    aplicaciones podemos aumentarlos sobre la marcha.
+
+        •	Administra servicios de forma declarativa.
+
+        •	Podemos realizar comparaciones de estado y auto-regeneración de la aplicaciones, con la ubicación, 
+                    reinicio, replicación y escalamiento automático
+
+          </pre>
+    </div>
+
+    <div class="tab-pane container fade" id="instalacion">
+        <div> <h1> Instalación </h1></div>
+        <pre>         
+        $kubectl apply -f nombrepod.yaml: se crea un pod (se debe haber creado un archivo y  ponerle la estructura Yaml).
+
+        $kubectl get po:obtiene la información de los pods(si alguno no aparece puede que se tenga que reiniciar)
+
+        $kubectl cat nombrepod.yaml: sirve para ver la estructura yaml del pod escrito.
+
+        $kubectl describe pod nombrepod: sirve para ver algunos problemas, es muy útil en la parte de “events”.
+
+        $kubectl run nombrepod --image=bitnami/nginx  --restart= never:la parte amarilla es el 	nombre de la imagen
+        que le queremos dar al pod. Y el restart es un truco para que nunca se reinicie y así no cree varios pods.
+
+        $kubectl  get pod nombrepod -o yaml: al no acordarse como crear un manifiesto y quiero crear uno nuevo.
+        Como obtenerlo de vuelta(lo amarillo es pedirlo de vuelta pero en formato yaml).
+
+        $kubectl exec -ti nombrepod /bin/sh: ingresar de manera iterativa a un pod.
+
+        $kubectl logs nombreetiqueta: Para ver los logs
+        
+        $kubectl port-forward nombrepod 8080(puerto) &:
+
+        $curl localhost: revisar creo que es para conectar a ese puerto(revisar).
+
+        $kubectl label pods mongo foo=bar: ¿?
+
+        $kubectl get pods –show -labels: para ver todas las etiquetas que tenemos en los pods.
+
+        $kubectl get pods -l foo=bar: ¿?
+
+        $kubectl get pods -Lrun: ¿?
+
+          </pre>
+
+        <div> <h1> Espacio </h1> </div>
+        <pre>         
+        
+          </pre>
+
+    </div>
+    
+    </div>

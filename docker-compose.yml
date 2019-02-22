@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  kubernetnetcore:
+    image: ${DOCKER_REGISTRY-}registrydemomicro.azurecr.io:v1
+    container_name: net_core_app_container
+    build:
+      context: .
+      dockerfile: WebMicrosoftp2\Dockerfile

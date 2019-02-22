@@ -1,0 +1,139 @@
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+ 
+.carousel slide .img{
+    background-color:red;
+
+}
+.grid-container .img {
+        margin: 10px;
+        padding: 5px;
+        height: auto;
+        width: auto;
+        max-height: 250px;
+}
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+.container{
+    width:100%;
+    
+}
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item .img {
+    position: relative;
+    max-height: 525px;
+    min-height: 525px;
+    min-width: 100%;
+    margin: auto;
+    background-color: dimgray;
+}
+/* Container slide*/
+.carousel-inner {
+    position: relative;
+    max-height: 525px;
+    min-height: 525px;
+    min-width: 100%;
+    margin-top:2% ;
+}
+.carousel-control {
+    opacity:0.1;
+}
+.carousel-control:hover {
+    opacity: 0.2;
+}
+
+.col-sm-5 {
+    margin-top: 6%;
+    margin-left: 6.4%;
+}
+.grid-container {
+    margin-top: 17%;
+    width: 90%;
+    height: 100%;
+    margin-left:2%;
+
+}
+
+.titles{
+
+    font-display:block;
+    font-family:'Malgun Gothic';
+    font-weight:bold;
+    font-size:20px;
+}
+
+.grid-item{
+    width:33.333333%;
+}
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+.navbar {
+    background-color: #2c3e50;
+    font-size:14px;
+    font-weight:bold;
+    padding:8px;
+    text-align:center;
+    
+}
+.titleKubernet {
+    margin-left: 35%;
+}
+.columnLeft {
+    width: 40%;
+    margin-top: 5%;
+    margin-left:2%;
+    margin-bottom:15%;
+}
+.titleKubernet{
+    margin-top:4%;
+}
+.columnRigth {
+    width: 50%;
+    margin-top: 5%;
+    margin-left:45%;
+    margin-bottom:5%;
+}
+.imgLeft .img {
+    margin-top: -90px;
+    margin-left: 120%;
+    max-height: 230px;
+}
+.imgRigth .img{
+    margin-top:-60%;
+    margin-left:-80%;
+    max-height:240px;
+}
+
+pre {
+    -webkit-overflow-scrolling: touch;
+    font-family: Courier New,monospace;
+    font-size: 1.1em;
+    margin: 2% 0 2em;
+}
+
+#navPill{
+    margin:3% auto;
+    font-size:20px;
+    font-style:italic;
+}
+/* CSS VIDEO*/
+

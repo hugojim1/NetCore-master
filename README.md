@@ -1,0 +1,2 @@
+# NetCore
+App in NetCore
